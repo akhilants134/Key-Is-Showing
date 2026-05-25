@@ -6,7 +6,7 @@
 
 The OpenAI API key was read from `import.meta.env.VITE_OPENAI_API_KEY` and passed directly in the `Authorization` request header of a `fetch()` call made from inside the React component. This means the call to `https://api.openai.com/v1/chat/completions` — including the `Bearer sk-...` credential — was made **from the browser**, making it fully visible in DevTools → Network → Headers.
 
-**Screenshot (before):** `screenshots/before-devtools.png`
+![Before — Authorization header visible in DevTools](screenshots/before-devtools.png)
 
 ### Why a `VITE_` environment variable does NOT protect the key
 
@@ -33,7 +33,7 @@ A publicly exposed API key is not just a security risk — it is a billing risk.
 
 ## After
 
-**Screenshot (after):** `screenshots/after-devtools.png`
+![After — no LLM credentials in browser network traffic](screenshots/after-devtools.png)
 
 The Authorization header is completely absent from all browser network traffic. The only request the browser makes is a `POST /api/summarize` to the app's own backend with a JSON body containing the notes. No LLM credentials appear anywhere in the browser.
 
